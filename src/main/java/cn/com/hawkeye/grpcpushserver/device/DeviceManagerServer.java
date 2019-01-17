@@ -54,8 +54,7 @@ public class DeviceManagerServer extends DeviceManagerGrpc.DeviceManagerImplBase
 	             */  
 	            @Override  
 	            public void onMessage(String channel, String message) {  
-	                System.out.println("TestClient1:channel："+channel+",message:"+message);  
-	  
+	                
 	            }  
 	        };  
 	          
@@ -63,7 +62,7 @@ public class DeviceManagerServer extends DeviceManagerGrpc.DeviceManagerImplBase
 	        //订阅两个频道：china.beijing和china.shanghai  
 	        //当订阅的频道有消息时，会执行jedisPubSub的onMessage方法。 
 	        String key = request.getClientId();
-	        jedis.subscribe(jedisPubSub,key);  
+	        jedis.subscribe(jedisPubSub,key);  //订阅
 	          
 	        System.out.println("该行代码是执行不到的");  
 	}
