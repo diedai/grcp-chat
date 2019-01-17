@@ -8,20 +8,40 @@ option objc_class_prefix = "HLW";
 package device;
 
 service DeviceManager {
-  //register
+  //
   rpc registerToServer (ClientInfo) returns (stream Message) {}
-  //send message
+  
+  //登陆
+  rpc login(LoginRequest) returns(stream Message){}
+  
+  //订阅
+  rpc sub(LoginRequest) returns(stream Message){}
+  
+  //发送信息
   rpc sendMsg(Message) returns (ErrorInfo) {}
+  
 
 }
-message ClientInfo {
+
+message ClientInfo{
+   string clientId = 1;
+}
+
+message SubRequest{
+   string clientId = 1;
+}
+
+message LoginRequest {
 	string clientId = 1;
+	string username = 2;
+	string password = 3;
 }
 
 message Message {
     int32 msgId = 1;
-    string receiver = 2;  //msg receiver
-    string content = 3;  //msg content
+    string sender = 2;
+    string receiver = 3;  //msg receiver //和clientId字段的值一样
+    string content = 4;  //msg content
 }
 
 message ErrorInfo {

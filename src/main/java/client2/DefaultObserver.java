@@ -5,10 +5,10 @@ import io.grpc.stub.StreamObserver;
 
 public class DefaultObserver implements StreamObserver<Message> {
 
-	private TestClient client;
+	private TestClient2 client;
 	private String info;
 	
-	public DefaultObserver(String info, TestClient client){
+	public DefaultObserver(String info, TestClient2 client){
 		this.info = info;
 		this.client = client;
 	}

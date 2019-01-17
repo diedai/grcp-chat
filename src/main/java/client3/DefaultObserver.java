@@ -1,13 +1,14 @@
-package client;
+package client3;
 
 import cn.com.hawkeye.device.Message;
 import io.grpc.stub.StreamObserver;
+
 public class DefaultObserver implements StreamObserver<Message> {
 
-	private TestClient1 client;
+	private TestClient3 client;
 	private String info;
 	
-	public DefaultObserver(String info, TestClient1 client){
+	public DefaultObserver(String info, TestClient3 client){
 		this.info = info;
 		this.client = client;
 	}
@@ -23,7 +24,7 @@ public class DefaultObserver implements StreamObserver<Message> {
 	}
 
 	/**
-	 *
+     *
 	 * Receive server push messages
 	 */
 	@Override

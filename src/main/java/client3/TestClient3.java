@@ -1,4 +1,4 @@
-package client2;
+package client3;
 
 import cn.com.hawkeye.device.ClientInfo;
 import cn.com.hawkeye.device.DeviceManagerGrpc;
@@ -9,14 +9,14 @@ import io.grpc.ManagedChannelBuilder;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class TestClient {
+public class TestClient3 {
     private final DeviceManagerGrpc.DeviceManagerStub asyncStub;
     private final DeviceManagerGrpc.DeviceManagerBlockingStub blockingStub;
     private final ManagedChannel channel;
     private final String clientId;
     private final ClientInfo clientInfo;
 
-    public TestClient(String host, int port, String clientId) {
+    public TestClient3(String host, int port, String clientId) {
         this(ManagedChannelBuilder.forAddress(host, port).usePlaintext(true), clientId);
     }
 
@@ -24,7 +24,7 @@ public class TestClient {
      * Construct client for accessing RouteGuide server using the existing
      * channel.W
      */
-    public TestClient(ManagedChannelBuilder<?> channelBuilder, String clientId) {
+    public TestClient3(ManagedChannelBuilder<?> channelBuilder, String clientId) {
         this.clientId = clientId;
         this.clientInfo = ClientInfo.newBuilder().setClientId(clientId).build();
         this.channel = channelBuilder.build();
@@ -43,7 +43,7 @@ public class TestClient {
     }
 
     public void sendMsg(String content){
-        Message msg = Message.newBuilder().setMsgId(0).setReceiver("1").setContent(content).build();
+        Message msg = Message.newBuilder().setMsgId(3).setSender("client3").setReceiver("client2").setContent(content).build();
         ErrorInfo result =  blockingStub.sendMsg(msg);
         if(result.getCode() == 0){
             System.out.println("send："+content );
@@ -51,15 +51,25 @@ public class TestClient {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        TestClient client = new TestClient("127.0.0.1", 8980,"2");
+    	//建立连接
+        TestClient3 client = new TestClient3("127.0.0.1", 8980,"client3");
+        
+        //注册到服务器
         client.registerToServer();
+        
+        //启动一个线程 接受信息：具体是监听redis 阻塞队列
+        Runnable runnable = new ListenMsg();
+        Thread thread = new Thread(runnable);
+        thread.start();
+        
+        //发送信息
         Scanner sc=new Scanner(System.in);
         while (true){
             String str = sc.nextLine();
             client.sendMsg(str);
         }
 
-
+        
     }
 
 }
