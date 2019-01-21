@@ -2,6 +2,12 @@ package client;
 
 import cn.com.hawkeye.device.Message;
 import io.grpc.stub.StreamObserver;
+
+/**
+ * 流-回调函数
+ * @author gongzhihao
+ *
+ */
 public class DefaultObserver implements StreamObserver<Message> {
 
 	private TestClient1 client;

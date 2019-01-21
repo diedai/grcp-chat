@@ -3,6 +3,11 @@ package client3;
 import cn.com.hawkeye.device.Message;
 import io.grpc.stub.StreamObserver;
 
+/**
+ * 流-回调函数
+ * @author gongzhihao
+ *
+ */
 public class DefaultObserver implements StreamObserver<Message> {
 
 	private TestClient3 client;
@@ -24,7 +29,7 @@ public class DefaultObserver implements StreamObserver<Message> {
 	}
 
 	/**
-     *
+	 *
 	 * Receive server push messages
 	 */
 	@Override
